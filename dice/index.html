@@ -1,0 +1,57 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>COC 骰子</title>
+</head>
+<div id="app">
+    <h2>投掷结果</h2>
+    <h1 v-if="randomData==null">未投掷</h1>
+    <h1 v-if="randomData!=null">{{ randomData }}</h1>
+
+
+    <hr />
+    <label>== 骰子选项 ==</label><br />
+    <input placeholder="1" v-model="num"> D <input id="MaxNum" placeholder="100"
+        v-model="maxnum"><br /><label>({{ num }} D {{ maxnum }} 即投掷 {{ num }} 个 {{ maxnum }} 面的骰子<{{ num }}~{{ num*maxnum }}>)</label><br />
+    <button @click="getNewNum()">投掷</button>
+    <hr />
+    <h3>历史记录</h3><button @click="clearLog()">clear</button>
+    <div v-for='numlog in numlogs' :key='numlog.id'>
+        <p>{{ numlog.set }} : {{ numlog.result }} <code>{{ numlog.verCode }}</code></p>
+    </div>
+</div>
+
+
+
+<script>
+    let id = 0;
+    var app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                randomData: null,
+                num: 1,
+                maxnum: 100,
+                numlogs: []
+            }
+        },
+        methods: {
+            getNewNum: function () {
+                this.numlogs = this.numlogs.reverse()
+                this.randomData = 0;
+                for (let index = 0; index < this.num; index++) {
+                    this.randomData += parseInt(Math.random() * (this.maxnum - 1 + 1) + 1, 10);
+                }
+                this.numlogs.push({ id: id++, set: this.num + " D " + this.maxnum, result: this.randomData})
+                this.numlogs = this.numlogs.reverse()
+            },
+            clearLog: function () {
+                this.numlogs = []
+            }
+        }
+    })
+</script>
