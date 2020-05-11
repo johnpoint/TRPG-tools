@@ -16,7 +16,7 @@
     <hr />
     <label>== 骰子选项 ==</label><br />
     <input placeholder="1" v-model="num"> D <input id="MaxNum" placeholder="100"
-        v-model="maxnum"><br /><label>({{ num }} D {{ maxnum }} 即投掷 {{ num }} 个 {{ maxnum }} 面的骰子)</label><br />
+        v-model="maxnum"><br /><label>({{ num }} D {{ maxnum }} 即投掷 {{ num }} 个 {{ maxnum }} 面的骰子<{{ num }}~{{ num*maxnum }}>)</label><br />
     <button @click="getNewNum()">投掷</button>
     <hr />
     <h3>历史记录</h3><button @click="clearLog()">clear</button>
